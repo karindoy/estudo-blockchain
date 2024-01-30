@@ -21,15 +21,8 @@ contract CasaDeCambio is CasaDeCambioAbstract{
         uint256 quantidadeTokens;
         uint256 precoLote;
         address dono;
-        bool ehAtivo;
     }
-    uint256 qtddOfertas = 0;
-    uint256 qtddOfertasAtivas = 0;
-    Oferta pOfertaAtiva;
-
-    mapping(uint256 => Oferta) public ofertas;
-    mapping(uint256 => Oferta) public ofertasAtivas;
-
+    Oferta[] public ofertas;
 
     constructor(address tokenAdress){
         token = ERC20(tokenAdress);
@@ -46,7 +39,6 @@ contract CasaDeCambio is CasaDeCambioAbstract{
     **/
     function realizaOferta(uint256 quantidadeTokens, uint256 precoLote) external apenasDono override {
         require(quantidadeTokens !=0, unicode"Não pode ser zero");
-        require(token.balanceOf(address(msg.sender)) > 100000, "sdasd ");
         require(precoLote !=0, "Nao pode ser zero");
 
         token.transferFrom(msg.sender, address(this), quantidadeTokens);
@@ -55,16 +47,10 @@ contract CasaDeCambio is CasaDeCambioAbstract{
         novaOferta.quantidadeTokens = quantidadeTokens;
         novaOferta.precoLote = precoLote;
         novaOferta.dono = address(msg.sender);
-        novaOferta.ehAtivo = true;
-        qtddOfertas = qtddOfertas+1;
-        novaOferta.id = qtddOfertas;
-        ofertas[novaOferta.id] = novaOferta;
-        ofertasAtivas[novaOferta.id] = novaOferta;
+        novaOferta.id = ofertas.length;
+        
+        ofertas.push(novaOferta);
 
-        qtddOfertasAtivas = qtddOfertasAtivas +1;
-        if(qtddOfertasAtivas == 1){
-            pOfertaAtiva = novaOferta;
-        }
         emit ofertaRealizada(novaOferta.id, quantidadeTokens, precoLote);
     }
 
@@ -76,33 +62,20 @@ contract CasaDeCambio is CasaDeCambioAbstract{
         5.Transferir a quantidade de tokens para a carteira de quem chama
     **/
     function compra(uint256 id) external payable override{
-        require(id <= qtddOfertas, "id invalido");
+        require(id <= ofertas.length - 1, "id invalido");
         Oferta memory oferta = ofertas[id];
-        require(oferta.ehAtivo == true, "deve ser ativo");
 
-        token.transferFrom(address(this), address(msg.sender), oferta.quantidadeTokens);
-        oferta.ehAtivo = false;
+        token.transfer(address(msg.sender), oferta.quantidadeTokens);
         ofertas[id] = oferta;
-
-        qtddOfertasAtivas = qtddOfertasAtivas -1;
-
-        for (uint i; i< qtddOfertas; i++) {
-            Oferta memory ofertaTest = ofertas[i];
-            if(ofertaTest.ehAtivo){
-                qtddOfertasAtivas = qtddOfertasAtivas +1;
-                if(qtddOfertasAtivas == 1){
-                    pOfertaAtiva = ofertaTest;
-                }
-            }
-             
-        }
+        removeOferta(id);
     }
 
     /**
         Retornar a quantidade de ofertas ativas e o id da primeira oferta disponível
     **/
     function consultaOfertas() external view override returns (uint, uint){
-        return (qtddOfertasAtivas, pOfertaAtiva.id);
+        uint ofertasSize = ofertas.length;
+        return (ofertasSize, ofertas[0].id);
     }
     
     // Desafio opcional: Retornar uma lista das ofertas ativas
@@ -113,6 +86,17 @@ contract CasaDeCambio is CasaDeCambioAbstract{
         recebedor.transfer(address(this).balance);
     }
 
+    function removeOferta(uint index ) private{
+            Oferta memory offer = ofertas[index];
+            ofertas[index] = pegaUltimaOferta();
+            ofertas[ofertas.length - 1] = offer;
+            ofertas.pop();
+        }
+    function pegaUltimaOferta() private view returns (Oferta memory){
+         uint lastIndex = ofertas.length - 1;
+
+         return ofertas[lastIndex];
+    }
     /* Dicas para armazenar ofertas:
         Mapping:
             mapping(xtype => ytype) public zMap;

@@ -46,3 +46,9 @@ MyToken.sol: 0x99681d5288Ae8703233bdE3112eE0d2117457972
 Desafio exchange
 com status: 0xe8D889873327c74DB92f839E9d7AF736Ab315427
 sem status: 0x6bDc50587A6725ee1954fD1033a87bdFb9EB5431
+
+Casa de cambio
+0xAFC1B0Bb12F032e4Fd56849DA932e1F98Be5098c
+
+NFT
+https://github.com/karindoy/minternft/
