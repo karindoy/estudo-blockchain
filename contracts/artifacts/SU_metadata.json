@@ -1,0 +1,81 @@
+{
+	"compiler": {
+		"version": "0.8.22+commit.4fc1097e"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [],
+				"name": "hello",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"stateMutability": "pure",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "name",
+						"type": "string"
+					}
+				],
+				"name": "helloName",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"stateMutability": "pure",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"custom:dev-run-script": "./scripts/deploy_with_ethers.ts",
+			"details": "Hellowold",
+			"kind": "dev",
+			"methods": {},
+			"title": "Hello",
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contracts/soma.sol": "SU"
+		},
+		"evmVersion": "shanghai",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"contracts/soma.sol": {
+			"keccak256": "0xe9e7f1b3e17642ab8200a80c265cda54b88fb396106d6fd8146ca35bb3e9ff90",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://129bf48e08481510d513e5aea8a825d7ac5ca6ca1198d465fe11d45febbf88d7",
+				"dweb:/ipfs/QmcXtigKHcVVXZdgWSwgRN2VPaM8S2JqzG4G5A7BxR2myt"
+			]
+		}
+	},
+	"version": 1
+}
