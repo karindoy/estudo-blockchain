@@ -34,4 +34,8 @@ contract PIX is ERC20, ERC20Burnable, ERC20Pausable, Ownable, ERC20Permit {
     {
         super._update(from, to, value);
     }
+
+    function decimals() public pure override returns (uint8) {
+        return 2;
+    }   
 }
