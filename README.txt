@@ -52,3 +52,9 @@ Casa de cambio
 
 NFT
 https://github.com/karindoy/minternft/
+
+NFT TOKEN1155
+0x4747c443aad3f85a2fc854cc6a5cf71c540ede68
+
+RewardProgram:
+0xb084df45d8d7310695f9132609fc064d50622a0b
